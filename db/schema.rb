@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118155331) do
+ActiveRecord::Schema.define(version: 20141118155924) do
 
   create_table "categories", force: true do |t|
     t.string "name"
   end
+
+  create_table "categories_posts", id: false, force: true do |t|
+    t.integer "category_id", null: false
+    t.integer "post_id",     null: false
+  end
+
+  add_index "categories_posts", ["category_id", "post_id"], name: "index_categories_posts_on_category_id_and_post_id"
+  add_index "categories_posts", ["post_id", "category_id"], name: "index_categories_posts_on_post_id_and_category_id"
 
   create_table "comments", force: true do |t|
     t.text    "body"
