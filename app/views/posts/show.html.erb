@@ -3,6 +3,13 @@
 <p><%= @post.description %></p>
 <%= render 'post_info', post: @post %>
 <%= link_to 'Edit post', edit_post_path %>
+<hr/>
+Leave a comment:
+<%= form_for [@post, @comment] do |f|%>
+  <%= f.text_area :body %>
+  <br/>
+  <%= f.submit class: "btn btn-primary"%>
+<% end %>
 		
 
 	
