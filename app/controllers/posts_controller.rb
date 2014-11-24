@@ -6,23 +6,29 @@ class PostsController < ApplicationController
   end
 
   def show
-  	
   end
 
   def new
-
+    @post = Post.new()
   end
 
   def create
-
+    @post = Post.new(post_params)
+    @post.creator = User.first
+    if @post.save
+      flash[:notice] = "Your post was created"
+      redirect_to(@post)
+    else
+      render :new
+    end
   end
 
   def edit
-
   end
 
   def update
     if @post.update(post_params)
+      flash[:notice] = "Your post was updated"
       redirect_to(@post)
     else
       render :edit
