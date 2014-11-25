@@ -1,9 +1,10 @@
 <p><%= render @post.categories %></p>
-<%= render 'shared/content_title', title: link_to(@post.title, @post.url, target: '_blank') %>
+<%= render 'shared/content_title', title: link_to(@post.title, format_url(@post.url), target: '_blank') %>
 <p><%= @post.description %></p>
 <%= render 'post_info', post: @post %>
 <%= link_to 'Edit post', edit_post_path %>
 <hr/>
+
 Leave a comment:
 <%= form_for [@post, @comment] do |f|%>
   <%= f.text_area :body %>

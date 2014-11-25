@@ -1,0 +1,10 @@
+<div class='well'>
+  <%= form_for @category do |f| %>
+    <div class="control-group">
+      <%= render 'shared/errors', obj: @category %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <%= f.submit class: "btn btn-primary" %>
+  <% end %>
+</div>

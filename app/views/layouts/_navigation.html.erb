@@ -5,4 +5,21 @@
   <li>
     <%= link_to 'New Post', new_post_path %>
   </li>
+  
+  <li>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="categoryMenu" data-toggle="dropdown" aria-expanded="true">
+        Categories
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="categoryMenu">
+        <% Category.all.each do |category| %>
+          <li role="presentation"><%= link_to category.name, category_path(category), class: "menuitem", tabindex: "-1" %></li>
+        <% end %>
+          <li role="presentation" class="divider"></li>
+          <li><%= link_to(new_category_path) do %><i class="icon-plus"></i> New category<% end %></li>
+      </ul>
+    </div>
+  </li>
+  
 </ul>

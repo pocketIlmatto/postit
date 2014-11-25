@@ -1,15 +1,5 @@
-<% if @post.errors.any? %>
-	<div class = "alert alert-error">
-		<h5> Errors: </h5>
-		<ul>
-		<% @post.errors.full_messages.each do |error| %>
-			<li><%= error %></li>
-			<% end %>
-		</ul>
-	</div>
-<% end %>
-
 <%= form_for(@post) do |f| %>
+	<%= render 'shared/errors' obj: @post %>
 	<%= f.label 		:title %>
 	<%= f.text_field 	:title %>
 
