@@ -1,7 +1,7 @@
 <p><%= render @post.categories %></p>
 <%= render 'shared/content_title', title: link_to(@post.title, format_url(@post.url), target: '_blank') %>
 <p><%= @post.description %></p>
-<%= render 'post_info', post: @post %>
+<%= render 'shared/user_time_info', user: @post.creator, created_at: @post.created_at %>
 <%= link_to 'Edit post', edit_post_path %>
 <hr/>
 
@@ -12,5 +12,15 @@ Leave a comment:
   <%= f.submit class: "btn btn-primary"%>
 <% end %>
 		
-
+<br/>
+<h5>Comments</h5>
+<div class="row">
+  <div class='span8 well'>
+    <% @post.comments.each do |comment| %>
+      <em><%= comment.body %></em>
+      <br/>
+      <%= render 'shared/user_time_info', user: comment.creator, created_at: comment.created_at %>
+    <% end %>
+  </div>
+</div>
 	
