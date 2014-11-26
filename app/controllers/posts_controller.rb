@@ -16,6 +16,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.creator = User.first
+    @post.category_ids = post_params[:category_ids]
     if @post.save
       flash[:notice] = "Your post was created"
       redirect_to(@post)
@@ -28,6 +29,7 @@ class PostsController < ApplicationController
   end
 
   def update
+    @post.category_ids = post_params[:category_ids]
     if @post.update(post_params)
       flash[:notice] = "Your post was updated"
       redirect_to(@post)
@@ -42,6 +44,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-  	params.require(:post).permit(:url, :description, :user_id, :title, :category_ids)
+  	params.require(:post).permit(:url, :description, :user_id, :title, :category_ids => [])
   end
 end
