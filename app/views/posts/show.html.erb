@@ -2,28 +2,32 @@
 <%= render 'shared/content_title', title: link_to(@post.title, format_url(@post.url), target: '_blank') %>
 <p><%= @post.description %></p>
 <%= render 'shared/user_time_info', user: @post.creator, created_at: @post.created_at %>
-<%= link_to 'Edit post', edit_post_path(@post) %>
+<% if content_owner(@post.user_id) %>
+  <%= link_to 'Edit post', edit_post_path(@post) %>
+<% end %>
 <hr/>
 
-
-<%= form_for [@post, @comment] do |f| %>
-  <%= render 'shared/errors', obj: @comment %>
-  <div class="control-group">
-    <%= f.label :body, "Leave a comment" %>
-    <%= f.text_area :body, rows: 3, class: "span4" %>
-  </div>
-  <%= f.submit "Create comment", class: "btn btn-primary"%>
-<% end %>
-		
-
-<h5>Comments</h5>
-<% @post.comments.each do |comment| %>
-  <div class="row">
-    <div class='span8 well'>
-      <em><%= comment.body %></em>
-      <br/>
-      <%= render 'shared/user_time_info', user: comment.creator, created_at: comment.created_at %>
+<% if logged_in? %>
+  <%= form_for [@post, @comment] do |f| %>
+    <%= render 'shared/errors', obj: @comment %>
+    <div class="control-group">
+      <%= f.label :body, "Leave a comment" %>
+      <%= f.text_area :body, rows: 3, class: "span4" %>
     </div>
-  </div>
+    <%= f.submit "Create comment", class: "btn btn-primary"%>
+  <% end %>
+<% end %>
+
+<% if @post.comments.size > 0 %>
+  <h5>Comments</h5>
+  <% @post.comments.each do |comment| %>
+    <div class="row">
+      <div class='span8 well'>
+        <em><%= comment.body %></em>
+        <br/>
+        <%= render 'shared/user_time_info', user: comment.creator, created_at: comment.created_at %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
   

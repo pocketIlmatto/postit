@@ -1,0 +1,17 @@
+<%= render 'shared/content_title', title: "Login" %>
+<div class= "well">
+
+  <%= form_tag '/login' %>
+  <div class="control-group">
+    <%= label_tag 'Username' %>
+    <%= text_field_tag :username, (params[:username] or '') %>
+  </div>
+  <div class="control-group">
+    <%= label_tag 'Password' %>
+    <%= password_field_tag :password, (params[:password] or '') %>
+  </div>
+  
+  <br/>
+  <%= submit_tag "Login", class: "btn btn-primary" %>
+  </div>
+

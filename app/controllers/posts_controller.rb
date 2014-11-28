@@ -1,5 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update]
+  before_action :require_user, only: [:new, :create]
+  before_action only: [:edit, :update, :destroy] do
+    require_logged_in_object_owner(@post.user_id)
+  end
 
   def index
   	@posts = Post.all
@@ -15,7 +19,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.creator = User.first
+    @post.creator = current_user
     if @post.save
       flash[:notice] = "Your post was created"
       redirect_to(@post)

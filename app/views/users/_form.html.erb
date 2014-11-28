@@ -1,0 +1,19 @@
+<%= render 'shared/errors', obj: @user %>
+<div class="well">
+  <%= form_for(@user) do |f| %>
+    <div class="control-group">
+      <%= f.label       :username %>
+      <%= f.text_field  :username %>
+    </div>
+    <div class="control-group">
+      <%= f.label           :password %>
+      <%= f.password_field  :password %>
+    </div>
+    <div class="control-group">
+      <%= label_tag           :password_validation, 'Re-enter password' %>
+      <%= password_field_tag  :password_validation %>
+    </div>
+    <br/>
+    <%= f.submit(@user.new_record? ? 'Register' : 'Update', class: "btn btn-primary") %>
+  <% end %>
+</div>
