@@ -1,4 +1,4 @@
 <p>
-  <span class='quiet'>posted by</span> <%= user.username %>
+  <span class='quiet'>posted by</span> <%= link_to user.username, user_path(user) %>
   <small>at <%= l created_at, format: :submitted %></small>
 </p>

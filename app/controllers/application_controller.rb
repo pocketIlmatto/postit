@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   def require_logged_in_object_owner(owner_id)
     if !content_owner(owner_id)
       flash[:error] = "You do not have enough rights to perform that action!"
-      redirect_to login_path
+      redirect_to root_path
     end
   end
 
