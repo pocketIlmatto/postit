@@ -5,6 +5,17 @@ class Post < ActiveRecord::Base
 	validates :user_id, presence: true
 	validates :title, presence: true
 	validates :url, presence: true
-
+  has_many :votes, as: :voteable
 	
+  def total_votes
+    upvotes - downvotes
+  end
+
+  def upvotes
+    self.votes.where(vote: true).size
+  end
+
+  def downvotes
+    self.votes.where(vote: false).size
+  end
 end

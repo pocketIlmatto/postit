@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update]
-  before_action :require_user, only: [:new, :create]
+  before_action :set_post, only: [:show, :edit, :update, :vote]
+  before_action :require_user, only: [:new, :create, :vote]
   before_action only: [:edit, :update, :destroy] do
     require_logged_in_object_owner(@post.user_id)
   end
 
   def index
-  	@posts = Post.all
+  	@posts = Post.all.sort_by {|x| x.total_votes}.reverse
   end
 
   def show
@@ -38,6 +38,17 @@ class PostsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def vote
+    @vote = @post.votes.create(creator: current_user, vote: params[:vote])
+
+    if @vote.valid?
+      flash[:notice] = "Vote counted!"
+    else
+      flash[:error] = "You can only vote for that post once!"
+    end
+    redirect_to :back
   end
 
   private
