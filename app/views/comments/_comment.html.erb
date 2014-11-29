@@ -1,0 +1,10 @@
+<div class="row">
+  <div class='span8 well'>
+    <em><%= comment.body %></em>
+    <% if show_post %>
+    on <%= link_to comment.post.title, comment.post %>
+    <% end %>
+    <br/>
+    <%= render 'shared/user_time_info', user: comment.creator, created_at: comment.created_at %>
+  </div>
+</div>

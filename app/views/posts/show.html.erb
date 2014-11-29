@@ -20,14 +20,6 @@
 
 <% if @post.comments.size > 0 %>
   <h5>Comments</h5>
-  <% @post.comments.each do |comment| %>
-    <div class="row">
-      <div class='span8 well'>
-        <em><%= comment.body %></em>
-        <br/>
-        <%= render 'shared/user_time_info', user: comment.creator, created_at: comment.created_at %>
-      </div>
-    </div>
-  <% end %>
+  <%= render @post.comments, show_post: false %>
 <% end %>
   

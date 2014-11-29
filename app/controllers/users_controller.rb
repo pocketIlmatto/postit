@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     #   render :new and return
     # end
     if @user.save
+      session[:user_id] = @user.id
       flash[:notice] = "Welcome #{@user.username}!"
       redirect_to root_path
     else
@@ -32,7 +33,13 @@ class UsersController < ApplicationController
   end
 
   def update
-
+    @user.update(user_params)
+    if @user.save
+      flash[:notice] = "Your profile has been updated."
+      redirect_to user_path @user
+    else
+      render :edit
+    end
   end
 
   private
