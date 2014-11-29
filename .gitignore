@@ -17,3 +17,5 @@
 
 *.ruby-gemset
 *.ruby-version
+
+/config/initializers/load_keys.rb

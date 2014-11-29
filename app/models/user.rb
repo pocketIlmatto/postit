@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 		-> { order('created_at desc').limit(2)},
 		class_name: "Post"
   has_secure_password validations: false
+  has_many :authorizations
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, on: :create, length: {minimum: 3}
 

@@ -1,7 +1,9 @@
 <%= render 'shared/content_title', title: "Login" %>
+
 <div class= "well">
 
   <%= form_tag '/login' %>
+  <%= render 'shared/errors', obj: @authorization unless @authorization.nil? %>
   <div class="control-group">
     <%= label_tag 'Username' %>
     <%= text_field_tag :username, (params[:username] or '') %>
@@ -13,5 +15,6 @@
   
   <br/>
   <%= submit_tag "Login", class: "btn btn-primary" %>
-  </div>
+  <%= link_to "Connect With Facebook", "/auth/facebook" %>
+</div>
 

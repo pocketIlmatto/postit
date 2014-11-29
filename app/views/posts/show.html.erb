@@ -8,6 +8,7 @@
 <hr/>
 
 <% if logged_in? %>
+  <% @comment ||= @post.comments.new %>
   <%= form_for [@post, @comment] do |f| %>
     <%= render 'shared/errors', obj: @comment %>
     <div class="control-group">
