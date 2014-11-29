@@ -16,4 +16,5 @@
     <br/>
     <%= f.submit(@user.new_record? ? 'Register' : 'Update', class: "btn btn-primary") %>
   <% end %>
+  <%= link_to "Connect With Facebook", "/auth/facebook", class: 'btn btn-primary' %>
 </div>

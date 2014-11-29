@@ -1,3 +1,4 @@
+include ApplicationHelper
 class User < ActiveRecord::Base
 	has_many :posts, counter_cache: true
 	has_many :comments, counter_cache: true
@@ -11,4 +12,12 @@ class User < ActiveRecord::Base
   validates :password, presence: true, on: :create, length: {minimum: 3}
 
 
+  def add_authorization(auth_hash)
+    authorization = self.authorizations.build(uid: auth_hash[:uid], provider: auth_hash[:provider])     
+  end
+
+  def self.create_user_from_authorization(auth_hash)
+    user_name = auth_hash[:info][:first_name] + " " + auth_hash[:info][:last_name]
+    @user = User.new(username: generate_unique_username(user_name), password: auth_hash[:uid])   
+  end
 end

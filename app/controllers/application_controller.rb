@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :logged_in?, :content_owner, :generate_unique_username
+  helper_method :current_user, :logged_in?, :content_owner
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -29,13 +29,6 @@ class ApplicationController < ActionController::Base
       flash[:error] = "You do not have enough rights to perform that action!"
       redirect_to root_path
     end
-  end
-
-  def generate_unique_username
-    begin
-      username = Faker::Internet.user_name
-    end while User.find_by(username: username )
-    username
   end
 
 end
