@@ -10,9 +10,9 @@ class CommentsController < ApplicationController
       flash[:notice] = "Your comment was created."
       redirect_to post_path(@post)
     else
-      @post.comments.delete(@comment)
+      flash[:error] = "Comment must not be empty."
       @post.reload.comments
-      render 'posts/show'
+      redirect_to post_path(@post)
     end
   end
 
