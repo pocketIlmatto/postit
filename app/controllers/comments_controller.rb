@@ -7,10 +7,10 @@ class CommentsController < ApplicationController
     @comment.creator = current_user
     
     if @comment.save
-      @post.comments.delete(@comment)
       flash[:notice] = "Your comment was created."
       redirect_to post_path(@post)
     else
+      @post.comments.delete(@comment)
       @post.reload.comments
       render 'posts/show'
     end
