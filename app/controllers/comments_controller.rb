@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
     else
       flash[:error] = "You can only vote on that comment once."
     end
-    binding.pry
+    #binding.pry
     redirect_to :back
   end
 
