@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
 
   def add_authorization(auth_hash)
-    authorization = self.authorizations.build(uid: auth_hash[:uid], provider: auth_hash[:provider])     
+    authorization = self.authorizations.build(uid: auth_hash[:uid], provider: auth_hash[:provider], auth_hash: auth_hash)     
   end
 
   def self.create_user_from_authorization(auth_hash)
@@ -25,5 +25,9 @@ class User < ActiveRecord::Base
       user_name = Factory::Internet.user_name
     end
     @user = User.new(username: generate_unique_username(user_name), password: auth_hash[:uid])   
+  end
+
+  def has_authorization?(provider)
+    self.authorizations.where(provider: provider).size == 0 ? false : true
   end
 end

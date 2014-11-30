@@ -1,2 +1,27 @@
 <%= render 'shared/content_title', title: "Edit Profile" %>
-<%= render 'form' %>
+
+<ul class="nav nav-tabs">
+  <li class='<%= 'active' if params[:tab].nil? %>'>
+    <%= link_to "Profile", edit_user_path(@user) %>
+  </li>
+  <li class='<%= 'active' if params[:tab] == 'comments' %>'>
+    <%= link_to "Connected accounts (#{@user.authorizations.size})", edit_user_path(@user, tab: 'authorizations') %>
+  </li>
+</ul>
+
+  
+
+<%= render 'form' if params[:tab].nil? %>
+<% if params[:tab] == 'authorizations' %>
+  <%= render @user.authorizations %>
+
+  <% unless @user.has_authorization?("facebook") %>
+    <%= link_to "Connect With Facebook", "/auth/facebook", class: 'btn btn-primary' %>
+    <br/>
+    <br/>
+  <% end %>
+  <% unless @user.has_authorization?("github") %>
+    <%= link_to "Connect With GitHub", "/auth/github", class: 'btn btn-primary' %>
+  <% end %>
+
+<% end %>

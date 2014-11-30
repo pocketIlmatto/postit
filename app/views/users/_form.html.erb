@@ -16,7 +16,6 @@
     <br/>
     <%= f.submit(@user.new_record? ? 'Register' : 'Update', class: "btn btn-primary") %>
   <% end %>
-  <%= link_to "Connect With Facebook", "/auth/facebook", class: 'btn btn-primary' %>
   <br/>
-  <%= link_to "Connect With GitHub", "/auth/github", class: 'btn btn-primary' %>
+  Or, <%= link_to "Login with Facebook or Github", login_path %>
 </div>
