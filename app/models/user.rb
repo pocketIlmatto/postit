@@ -17,7 +17,13 @@ class User < ActiveRecord::Base
   end
 
   def self.create_user_from_authorization(auth_hash)
-    user_name = auth_hash[:info][:first_name] + " " + auth_hash[:info][:last_name]
+    if auth_hash[:provider] == "facebook"
+      user_name = auth_hash[:info][:first_name] + " " + auth_hash[:info][:last_name]
+    elsif auth_hash[:provider] == "github"
+      user_name = auth_hash[:info][:name]
+    else
+      user_name = Factory::Internet.user_name
+    end
     @user = User.new(username: generate_unique_username(user_name), password: auth_hash[:uid])   
   end
 end
