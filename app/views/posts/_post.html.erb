@@ -6,7 +6,7 @@
           <i class="icon-arrow-up"></i>
         <% end %><br/>
       <% end %>
-      <span id='post_<%= post.id %>_vote'><%= post.total_votes %> </span> vote<%= post.total_votes == 1 ? " " : "s" %>
+      <span id='post_<%= post.id %>_vote'><%= post.total_votes %> vote<%= post.total_votes == 1 ? " " : "s" %></span> 
       <br/>
       <% if logged_in? %>
         <%= link_to vote_post_path(post, vote: false), method: 'post', remote: true do %> 
