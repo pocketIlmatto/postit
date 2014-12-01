@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :logged_in?, :content_owner
+  helper_method :current_user, :logged_in?, :content_owner, :require_admin
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -27,6 +27,13 @@ class ApplicationController < ActionController::Base
   def require_logged_in_object_owner(owner_id)
     if !content_owner(owner_id)
       flash[:error] = "You do not have enough rights to perform that action!"
+      redirect_to root_path
+    end
+  end
+
+  def require_admin
+    if !logged_in? || !current_user.is_admin?
+      flash[:error] = "You are not authorized to do that."
       redirect_to root_path
     end
   end

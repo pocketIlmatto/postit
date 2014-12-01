@@ -1,3 +1,4 @@
+include ApplicationHelper
 class Post < ActiveRecord::Base
 	belongs_to :creator, class_name: "User", foreign_key: :user_id
 	has_many :comments, counter_cache: true
@@ -6,6 +7,7 @@ class Post < ActiveRecord::Base
 	validates :title, presence: true
 	validates :url, presence: true
   has_many :votes, as: :voteable
+  before_save :generate_slug
 	
   def total_votes
     upvotes - downvotes
@@ -17,5 +19,19 @@ class Post < ActiveRecord::Base
 
   def downvotes
     self.votes.where(vote: false).size
+  end
+
+  def to_param
+    slug
+  end
+
+  def generate_slug
+    slug = create_slug(self.title) 
+    i = 1
+    while (Post.find_by(slug: slug))
+      slug << i.to_s unless Post.find_by(slug: slug+i.to_s)
+      i += 1
+    end 
+    self.slug = slug
   end
 end
