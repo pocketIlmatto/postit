@@ -1,6 +1,8 @@
 include ApplicationHelper
 class User < ActiveRecord::Base
-	has_many :posts, counter_cache: true
+	include Sluggable
+
+  has_many :posts, counter_cache: true
 	has_many :comments, counter_cache: true
   has_many :votes
 	has_many :recent_posts, 
@@ -10,8 +12,8 @@ class User < ActiveRecord::Base
   has_many :authorizations
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, on: :create, length: {minimum: 3}
-  before_save :generate_slug
-
+  sluggable_column :username
+  
   def add_authorization(auth_hash)
     authorization = self.authorizations.build(uid: auth_hash[:uid], provider: auth_hash[:provider], auth_hash: auth_hash)     
   end
@@ -29,22 +31,6 @@ class User < ActiveRecord::Base
 
   def has_authorization?(provider)
     self.authorizations.where(provider: provider).size == 0 ? false : true
-  end
-
-  def to_param
-    slug
-  end
-
-  def generate_slug
-    slug = create_slug(self.username) 
-    i = 2
-    user = User.find_by(slug: slug)
-    while user && user != self
-      slug = self.append_suffix(slug, i)
-      user = User.find_by(slug: slug)
-      i += 1
-    end 
-    self.slug = slug
   end
 
   def is_admin?
