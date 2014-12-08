@@ -16,6 +16,7 @@ gem 'faker'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
+gem 'voteable_pocket'
 
 group :doc do
   gem 'sdoc', require: false

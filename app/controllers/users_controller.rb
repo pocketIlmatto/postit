@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action only: [:edit, :update, :destroy] do
-    require_logged_in_object_owner(@user.id)
+    require_logged_in_object_creator(@user.id)
   end
 
   def show

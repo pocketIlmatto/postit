@@ -2,7 +2,7 @@
 <%= render 'shared/content_title', title: link_to(@post.title, format_url(@post.url), target: '_blank') %>
 <p><%= @post.description %></p>
 <%= render 'shared/user_time_info', user: @post.creator, created_at: @post.created_at %>
-<% if content_owner(@post.user_id) %>
+<% if content_creator_or_admin?(@post.user_id) %>
   <%= link_to 'Edit post', edit_post_path(@post) %>
 <% end %>
 <hr/>

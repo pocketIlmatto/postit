@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :vote]
   before_action :require_user, only: [:new, :create, :vote]
   before_action only: [:edit, :update, :destroy] do
-    require_logged_in_object_owner(@post.user_id)
+    require_creator_or_admin(@post.user_id)
   end
 
   def index
