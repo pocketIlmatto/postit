@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :logged_in?, :content_creator?, :content_creator_or_admin?, :require_admin
+  helper_method :current_user, :logged_in?, :content_creator?, :content_creator_or_admin?, :require_admin, :current_timezone
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -25,6 +25,14 @@ class ApplicationController < ActionController::Base
     if !logged_in?
       flash[:error] = "You must be logged in to perform that action!"
       redirect_to login_path
+    end
+  end
+
+  def current_timezone
+    if logged_in? && current_user.timezone
+      current_user.timezone
+    else
+      config.time_zone 
     end
   end
 

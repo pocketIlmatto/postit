@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def display_datetime(dt)
-    dt.strftime("%m/%d/%Y %H:%M%p %Z")
+    dt.in_time_zone(current_timezone).strftime("%m/%d/%Y %H:%M%p %Z")
   end
 
   def generate_unique_username(name = '')

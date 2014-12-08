@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141201095902) do
+ActiveRecord::Schema.define(version: 20141208225018) do
 
   create_table "authorizations", force: true do |t|
     t.string   "provider"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20141201095902) do
     t.string "password_digest"
     t.string "slug"
     t.string "role"
+    t.string "timezone"
   end
 
   create_table "votes", force: true do |t|
