@@ -37,9 +37,11 @@ class User < ActiveRecord::Base
 
   def generate_slug
     slug = create_slug(self.username) 
-    i = 1
-    while (User.find_by(slug: slug))
-      slug << i.to_s unless User.find_by(slug: slug+i.to_s)
+    i = 2
+    user = User.find_by(slug: slug)
+    while user && user != self
+      slug = self.append_suffix(slug, i)
+      user = User.find_by(slug: slug)
       i += 1
     end 
     self.slug = slug

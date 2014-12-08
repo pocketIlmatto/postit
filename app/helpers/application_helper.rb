@@ -8,7 +8,14 @@ module ApplicationHelper
   end
 
   def create_slug(fulltext)
-    slug = fulltext.downcase.strip.gsub(" ", "-").gsub(/[^\w-]/, "")
+    slug = fulltext.downcase.strip.gsub(/[^\w-]/, "-").gsub(/-+/, "-")
+  end
+
+  def append_suffix(str, count)
+    if str.split('-').last.to_i != 0
+      str = str.split('-').slice(0..-2).join('-')
+    end
+    str << "-#{count.to_s}"
   end
 
   def generate_unique_username(name = '')

@@ -27,11 +27,14 @@ class Post < ActiveRecord::Base
 
   def generate_slug
     slug = create_slug(self.title) 
-    i = 1
-    while (Post.find_by(slug: slug))
-      slug << i.to_s unless Post.find_by(slug: slug+i.to_s)
+    i = 2
+    post = Post.find_by(slug: slug)
+    while post && post != self
+      slug = self.append_suffix(slug, i)
+      post = Post.find_by(slug: slug)
       i += 1
     end 
     self.slug = slug
   end
+
 end
